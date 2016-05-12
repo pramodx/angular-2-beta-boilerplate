@@ -1,17 +1,38 @@
-import {Component} from "angular2/core";
+import {Component, OnInit} from "angular2/core";
+import {ShoppingListEditComponent} from "./shopping-list-edit.component";
+import {Ingredient} from "../shared/ingredient";
+import {ShoppingListService} from "../shared/shopping-list.service";
 
 @Component({
 	template: `
 		<h1>Shopping List</h1>
-		<div>Edit Section</div>
+		<my-shopping-list-edit [ingredient]="selectedItem"></my-shopping-list-edit>
 		<div class="list">
-			<button class="btn">Add new Item</button>
-			<ul>
-				<li>List Items ...</li>
+			<button class="btn" (click)="onAddItem()">Add new Item</button>
+			<ul *ngIf="ingredient !== null" >
+				<li *ngFor="#item of shoppingList" (click)="onSelectItem(item)">{{item.name}} ({{item.amount}})</li>
 			</ul>
 		</div>
-	`
+	`,
+	directives: [ShoppingListEditComponent],
+	providers: [ShoppingListService]
 })
-export class ShoppingListComponent {
+export class ShoppingListComponent implements OnInit {
+	shoppingList: Ingredient[];
+	selectedItem: Ingredient = null;
+	ingredient: Ingredient
 
+	constructor(private _shoppingListService: ShoppingListService) {}
+
+	onSelectItem(item: Ingredient){
+		this.selectedItem = item;
+	}
+
+	onAddItem() {
+		this.selectedItem = null;
+	}
+
+	ngOnInit():any {
+		this.shoppingList = this._shoppingListService.getAllItems();
+	}
 }
