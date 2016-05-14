@@ -8,10 +8,10 @@ import {ShoppingListService} from "../shared/shopping-list.service";
 		<h1>{{ingredient === null ? 'Add' : 'Edit'}} Item</h1>
 		<form id="shopping-list-add" (ngSubmit)="onSubmit(f.value)" #f="ngForm">
 			<label for="item-name">Name</label>
-			<input type="text" id="item-name" required value="{{ingredient?.name}}" ngControl="name">
+			<input type="text" id="item-name" required [ngModel]="ingredient?.name" ngControl="name">
 			
 			<label for="item-amt">Amount</label>
-			<input type="text" id="item-amt" required value="{{ingredient?.amount}}" ngControl="amount">
+			<input type="text" id="item-amt" required [ngModel]="ingredient?.amount" ngControl="amount">
 			
 			<button class="btn" type="submit">{{ingredient === null ? 'Add' : 'Edit'}}</button>
 			<button class="btn danger" *ngIf="ingredient !== null" (click)="onDelete()">Delete</button>

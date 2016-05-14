@@ -26,6 +26,10 @@ export class RecipeListComponent implements OnInit {
 		this._router.navigate(['RecipeDetail',{ recipeIndex: Number( this._recipeService.getRecipeIndex(item))}])
 	}
 
+	onAddRecipe(){
+		this._router.navigate(['RecipeEdit', {editMode: 'create'}])
+	}
+
 	ngOnInit() {
 		this.recipes = this._recipeService.getRecipes();
 	}
